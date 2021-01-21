@@ -1,8 +1,12 @@
 # BasicCPhoneBook
 Basic Telephone Book program:
+
 • Our program is a basic program that reads and stores phone book data for out users in a text file.
+
 • The program offers the option to read a text file sort it, print what is inside it, Delete, Modify or add an entry to the file.
+
 • The program is very efficient and uses the latest sorting and searching algorithms and works well on large files as well as small ones.
+
 # User Manual #
 • First of all you need to put a text file in the program directory which has the data stored in as follows:
 lastname,firstname,phone number,address,day,month,year,email
