@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1610840170 source:h:\ssp\ssp term 3\progamming 1\project final final\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+
