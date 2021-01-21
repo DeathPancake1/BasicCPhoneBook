@@ -1,8 +1,3 @@
-//Youssef Mohamed Ahmed 7211
-//Marwan Khaled Mohamed 7020
-//Amged Mohamed Ali 6712
-//Adam Essam Mohamed 6735
-//Mariam Hamada Meky 7072
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
