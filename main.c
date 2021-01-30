@@ -1,3 +1,8 @@
+//Youssef Mohamed Ahmed 7211
+//Marwan Khaled Mohamed 7020
+//Amged Mohamed Ali 6712
+//Adam Essam Mohamed 6735
+//Mariam Hamada Meky 7072
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,7 +13,7 @@ typedef struct{
 }Birth;
 
 typedef struct{
-    char lastName[20],firstName[20],address[41],phone[12],emailAddress[41];
+    char lastName[40],firstName[40],address[100],phone[15],emailAddress[100];
     Birth birthDate;
 }Entry;
 
@@ -80,13 +85,13 @@ int compare(Birth a, Birth b){
 }
 
 void LOAD(){
-    char *l;
+    int l;
     printf("Enter the name of the file you want to load.\n");
     scanf("%s",fileName);
     f=fopen(fileName,"r");
     if(!f){
         printf("Unable to load the file\n");
-        LOAD();
+        exit(0);
     }
     char buffer[100];
     while(fgets(buffer,sizeof(buffer),f)){
@@ -96,36 +101,35 @@ void LOAD(){
     fseek(f,0l,SEEK_SET);
     for(int i=0;i<numRecords;i++){
         fgets(buffer,sizeof(buffer),f);
-        char *tok=strtok(buffer,",");
+        char *tok=strtok(buffer,",-");
         strcpy(content[i].lastName,tok);
         for(int j=0;j<7;j++){
-            tok=strtok(NULL,",");
+            tok=strtok(NULL,",-");
             switch(j){
             case 0:
                 strcpy(content[i].firstName,tok);
                 break;
             case 1:
-                strcpy(content[i].phone,tok);
-                break;
-            case 2:
-                strcpy(content[i].address,tok);
-                break;
-            case 3:
                 content[i].birthDate.day=makeDigit(tok);
                 break;
-            case 4:
+            case 2:
                 content[i].birthDate.month=makeDigit(tok);
                 break;
-            case 5:
+            case 3:
                 content[i].birthDate.year=makeDigit(tok);
                 break;
+            case 4:
+                strcpy(content[i].address,tok);
+                break;
+            case 5:
+                strcpy(content[i].phone,tok);
+                break;
             case 6:
-                for(int i=0;i<numRecords;i++){
-                    l=strlen(tok);
-                    for(int j=0;j<l-1;j++){
-                        content[i].emailAddress[j]=tok[j];
-                    }
+                l=strlen(tok);
+                for(int j=0;j<l-1;j++){
+                    content[i].emailAddress[j]=tok[j];
                 }
+                content[i].emailAddress[l]='\0';
                 break;
             }
         }
@@ -134,7 +138,7 @@ void LOAD(){
 }
 
 void ADD(){
-    char lastName[20],firstName[20],address[41],phone[12],emailAddress[41];
+    char lastName[40],firstName[40],address[100],phone[15],emailAddress[100],c;
     unsigned int day,month,year;
     printf("Enter last name: ");
     scanf("%s",lastName);
@@ -146,8 +150,11 @@ void ADD(){
         printf("Phone number is not correct.\n");
         return;
     }
+    while((c = getchar()) != '\n' && c != EOF);//clears the input so the \n wont be scanned by the fgets
     printf("Enter address: ");
-    scanf("%s",address);
+    fgets(address,sizeof(address),stdin);//fgets not scanf to be able to have spaces
+    if ((strlen(address) > 0) && (address[strlen (address) - 1] == '\n'))
+        address[strlen (address) - 1] = '\0';
     printf("Enter day,month and year of birth: ");
     scanf("%d %d %d",&day,&month,&year);
     if(!validateDate(day,month,year)){
@@ -173,7 +180,7 @@ void ADD(){
 }
 
 void QUERY(){
-    char query[21],lowerQuery[21],lowerLname[21];
+    char query[40],lowerQuery[40],lowerLname[40];
     int f=0,lengthQ,lengthLN;
     printf("The last name of the person: ");
     scanf("%s",query);
@@ -189,7 +196,7 @@ void QUERY(){
             lowerLname[j]=tolower(lowerLname[j]);
         }
         if(strcmp(lowerLname,lowerQuery)==0){
-            printf("%s %s %s %s %d %d %d %s\n",content[i].lastName,content[i].firstName,content[i].phone,content[i].address,content[i].birthDate.day,content[i].birthDate.month,content[i].birthDate.year,content[i].emailAddress);
+            printf("%s,%s,%d-%d-%d,%s,%s,%s\n",content[i].lastName,content[i].firstName,content[i].birthDate.day,content[i].birthDate.month,content[i].birthDate.year,content[i].address,content[i].phone,content[i].emailAddress);
             f=1;
         }
     }
@@ -210,7 +217,7 @@ void sortByLname(){
         }
     }
     for(int i=0;i<numRecords;i++){
-        printf("%s %s %s %s %d %d %d %s\n",content[i].lastName,content[i].firstName,content[i].phone,content[i].address,content[i].birthDate.day,content[i].birthDate.month,content[i].birthDate.year,content[i].emailAddress);
+        printf("%s,%s,%d-%d-%d,%s,%s,%s\n",content[i].lastName,content[i].firstName,content[i].birthDate.day,content[i].birthDate.month,content[i].birthDate.year,content[i].address,content[i].phone,content[i].emailAddress);
     }
 }
 
@@ -226,7 +233,7 @@ void sortByDOB(){
         }
     }
     for(int i=0;i<numRecords;i++){
-        printf("%s %s %s %s %d %d %d %s\n",content[i].lastName,content[i].firstName,content[i].phone,content[i].address,content[i].birthDate.day,content[i].birthDate.month,content[i].birthDate.year,content[i].emailAddress);
+        printf("%s,%s,%d-%d-%d,%s,%s,%s\n",content[i].lastName,content[i].firstName,content[i].birthDate.day,content[i].birthDate.month,content[i].birthDate.year,content[i].address,content[i].phone,content[i].emailAddress);
     }
 }
 void PRINT(){
@@ -244,7 +251,7 @@ void PRINT(){
 }
 void MODIFY(){
     char query[21],lowerQuery[21],lowerLname[21];
-    int f=0,lengthQ,lengthLN,index;
+    int f=0,lengthQ,lengthLN,index,c;
     printf("The last name of the person you want to modify: ");
     scanf("%s",query);
     lengthQ=strlen(query);
@@ -267,7 +274,7 @@ void MODIFY(){
         printf("Unable to find %s in the file.\n",query);
         return;
     }
-    char lastName[20],firstName[20],address[41],phone[12],emailAddress[41];
+    char lastName[40],firstName[40],address[100],phone[15],emailAddress[100];
     unsigned int day,month,year;
     printf("Enter last name: ");
     scanf("%s",lastName);
@@ -279,8 +286,11 @@ void MODIFY(){
         printf("Phone number is not correct.\n");
         return;
     }
+    while((c = getchar()) != '\n' && c != EOF);
     printf("Enter address: ");
-    scanf("%s",address);
+    fgets(address,sizeof(address),stdin);
+    if ((strlen(address) > 0) && (address[strlen (address) - 1] == '\n'))
+        address[strlen (address) - 1] = '\0';
     printf("Enter day,month and year of birth: ");
     scanf("%d %d %d",&day,&month,&year);
     if(!validateDate(day,month,year)){
@@ -304,7 +314,7 @@ void MODIFY(){
 }
 
 void DELETE(){
-    char query[21],lowerQuery[21],lowerLname[21];
+    char query[40],lowerQuery[40],lowerLname[40];
     int f=0,lengthQ,lengthLN,index;
     printf("The last name of the person you want to delete: ");
     scanf("%s",query);
@@ -344,7 +354,7 @@ void SAVE(){
     f=fopen(fileName,"w");
     char buffer[100];
     for(int i=0;i<numRecords;i++){
-        sprintf(buffer,"%s,%s,%s,%s,%d,%d,%d,%s\n",content[i].lastName,content[i].firstName,content[i].phone,content[i].address,content[i].birthDate.day,content[i].birthDate.month,content[i].birthDate.year,content[i].emailAddress);
+        sprintf(buffer,"%s,%s,%d-%d-%d,%s,%s,%s\n",content[i].lastName,content[i].firstName,content[i].birthDate.day,content[i].birthDate.month,content[i].birthDate.year,content[i].address,content[i].phone,content[i].emailAddress);
         fputs(buffer,f);
     }
     fclose(f);
