@@ -1,8 +1,0 @@
-john,essam,01174401932,miami,9,9,2000,fdsljka@mail.comil.com
-dawoud,youssef,01196601072,sidi beshr,25,7,2001,fdsljka@mail.comil.com
-mohamoud,amged,01172201062,victoria,8,7,2002,fdsljka@mail.comil.com
-kamal,mohamed,01172201015,smouha,12,1,2002,fdsljka@mail.comil.com
-khaled,marwan,01263501012,syouf,1,1,2000,fdsljka@mail.comil.com
-mohamed,mariam,01245301023,smouha,7,7,2002,fdsljka@mail.comil.com
-mohamed,samir,01177701999,miami,10,12,2003,fdsljka@mail.comil.com
-nour,kamal,01523301282,sidi gaber,8,9,1982,fdsljka@mail.comil.com
