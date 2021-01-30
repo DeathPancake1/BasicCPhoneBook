@@ -9,7 +9,7 @@ Basic Telephone Book program:
 
 # User Manual #
 • First of all you need to put a text file in the program directory which has the data stored in as follows:
-lastname,firstname,phone number,address,day,month,year,email
+lastname,firstname,day-month-year,address,phone number,email
 
 • Then you should run the program and provide the name of the text file to it with the extenstion .txt at the end. Ex:”text.txt”.
 
